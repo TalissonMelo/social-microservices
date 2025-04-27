@@ -1,29 +1,25 @@
 package com.talissonmelo.domain.service;
 
-import com.talissonmelo.api.request.PostRequest;
 import com.talissonmelo.api.response.PostResponse;
 import com.talissonmelo.commom.PostMapper;
 import com.talissonmelo.domain.Post;
 import com.talissonmelo.infrastructure.PostRepository;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class CreatePostService {
+public class GetPostByIdService {
 
     private final PostRepository postRepository;
     private final PostMapper postMapper;
 
-    @Transactional
-    public PostResponse execute(PostRequest request) {
-
-        Post post = Post.created(request.title(), request.body(), request.author());
-
-        postRepository.saveAndFlush(post);
-
+    public PostResponse execute(UUID id) {
+        Post post = postRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         return postMapper.toPostResponse(post);
-
     }
 }
