@@ -21,15 +21,14 @@ public class Post {
     private Integer wordCount;
     private BigDecimal calculatedValue;
 
-    private Post(String title, String body, String author, Integer wordCount, BigDecimal calculatedValue) {
+    private Post(String title, String body, String author) {
+        this.id = UUID.randomUUID();
         this.title = title;
         this.body = body;
         this.author = author;
-        this.wordCount = wordCount;
-        this.calculatedValue = calculatedValue;
     }
 
-    public static Post created(String title, String body, String author, Integer wordCount, BigDecimal calculatedValue) {
-        return new Post(title, body, author, wordCount, calculatedValue);
+    public static Post created(String title, String body, String author) {
+        return new Post(title, body, author);
     }
 }
