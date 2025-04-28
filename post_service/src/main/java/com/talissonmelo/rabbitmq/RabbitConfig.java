@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitConfig {
     public static final String POST_QUEUE = "text-processor-service.post-processing.v1.q";
+    public static final String RESULT_QUEUE = "post-service.post-processing-result.v1.q";
 
     @Bean
     public Jackson2JsonMessageConverter jackson2JsonMessageConverter(ObjectMapper objectMapper) {
@@ -27,5 +28,18 @@ public class RabbitConfig {
     @Bean
     public Queue postDlq() {
         return new Queue(POST_QUEUE + ".dlq");
+    }
+
+    @Bean
+    public Queue resultQueue() {
+        return QueueBuilder.durable(RESULT_QUEUE)
+                .withArgument("x-dead-letter-exchange", "")
+                .withArgument("x-dead-letter-routing-key", RESULT_QUEUE + ".dlq")
+                .build();
+    }
+
+    @Bean
+    public Queue resultDlq() {
+        return new Queue(RESULT_QUEUE + ".dlq");
     }
 }

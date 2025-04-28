@@ -31,4 +31,10 @@ public class Post {
     public static Post created(String title, String body, String author) {
         return new Post(title, body, author);
     }
+
+    public Post update(Integer wordCount, BigDecimal calculatedValue) {
+        this.wordCount = wordCount;
+        this.calculatedValue = calculatedValue;
+        return this;
+    }
 }

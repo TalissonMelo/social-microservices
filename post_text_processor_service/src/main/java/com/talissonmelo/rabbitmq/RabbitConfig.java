@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitConfig {
     public static final String POST_QUEUE = "text-processor-service.post-processing.v1.q";
+    public static final String RESULT_QUEUE = "post-service.post-processing-result.v1.q";
 
     @Bean
     public Jackson2JsonMessageConverter jackson2JsonMessageConverter(ObjectMapper objectMapper) {
